@@ -22,7 +22,7 @@ module.exports = {
                 res = JSON.stringify(response.data)
                 console.log(res)
                 if (res == '{"sent":true}'){
-                    await interaction.editReply(`Hi <@${interaction.user.id}>! Skills have been sent to your SKALE address`)
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! SFUEL have been sent to your SKALE address`)
                 }
                 else if (res.includes('{"error":"Please try again in')){
                     await interaction.editReply(`Hi <@${interaction.user.id}>! You have already requested SFUEL. Please try again later.`)
@@ -41,7 +41,7 @@ module.exports = {
                 res = JSON.stringify(error.response.data)
                 console.log(res)
                 if (res == '{"sent":true}'){
-                    await interaction.editReply(`Hi <@${interaction.user.id}>! Skills have been sent to your SKALE address`)
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! SFUEL have been sent to your SKALE address`)
                 }
                 else if (res.includes('{"error":"Please try again in')){
                     await interaction.editReply(`Hi <@${interaction.user.id}>! You have already requested SFUEL. Please try again later.`)
