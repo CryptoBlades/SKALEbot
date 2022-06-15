@@ -13,10 +13,6 @@ module.exports = {
         allow = data.allowed(interaction.member._roles,data.roles());
         allow2 = data.allowed2(interaction);
         const playeraddress = interaction.options.getString('address');
-        fs.appendFile('logfile.txt', String(interaction.user.username) +" " + String(playeraddress) + "\n", function (err) {
-            if (err) throw err;
-            console.log('Saved!');
-        })
         if (allow.length != 0 || allow2 != 0)
         {
             await interaction.deferReply();
