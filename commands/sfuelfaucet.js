@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const data = require('../data.js')
 const axios = require('axios');
+const fs = require('fs')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,6 +13,10 @@ module.exports = {
         allow = data.allowed(interaction.member._roles,data.roles());
         allow2 = data.allowed2(interaction);
         const playeraddress = interaction.options.getString('address');
+        fs.appendFile('logfile.txt', String(interaction.user.username) +" " + String(playeraddress) + "\n", function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+        })
         if (allow.length != 0 || allow2 != 0)
         {
             await interaction.deferReply();
@@ -29,8 +34,11 @@ module.exports = {
                 else if (res.includes(`is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted."}`)){
                     await interaction.editReply(`Hi <@${interaction.user.id}>! You have entered an incorrect wallet address.`)
                 }
+                else if (res.includes(`The faucet has dried up`)){
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! Please Call Developer - Skale Faucet bot is out of sfuel`)
+                }
                 else{
-                    await interaction.editReply(`Hi <@${interaction.user.id}>! Please Call Moderator - Skale Faucet bot is dead`)
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! Bot maintenance! Please Wait`)
                 }
             })
             .catch(async (error) => {
@@ -45,10 +53,14 @@ module.exports = {
                 else if (res.includes(`is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted."}`)){
                     await interaction.editReply(`Hi <@${interaction.user.id}>! You have entered an incorrect wallet address.`)
                 }
+                else if (res.includes(`The faucet has dried up`)){
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! Please Call Developer - Skale Faucet bot is out of sfuel`)
+                }
                 else{
-                    await interaction.editReply(`Hi <@${interaction.user.id}>! Please Call Moderator - Skale Faucet bot is dead`)
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! Bot maintenance! Please Wait`)
                 }
             });
+    
         }
         else
         {

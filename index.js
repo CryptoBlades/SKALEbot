@@ -63,16 +63,15 @@ client.on('interactionCreate', async interaction => {
 	catch(err){
 		console.log(err);
 		try{
-			await interaction.editReply("An error occured while executing that command. Please contact strawberry_koko");
+			await interaction.editReply("An error occured while executing that command. Please contact Dev");
 		}
 		catch(err){
 			console.log(err)
-			await interaction.reply({
-			content: "An error occured while executing that command. Please contact strawberry_koko",
+			await interaction.editReply({
+			content: "An error occured while executing that command. Please contact a Dev",
 			emphemeral: true
 			});
 		}
-
 	}
 });
 
