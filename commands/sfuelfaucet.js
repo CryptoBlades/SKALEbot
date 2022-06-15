@@ -1,0 +1,63 @@
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { MessageEmbed } = require("discord.js");
+const data = require('../data.js')
+const Web3 = require('web3');
+const axios = require('axios');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName("sfuelfaucet")
+        .setDescription("Faucet for SFUEL")
+        .addStringOption(option => option.setName('address').setDescription('Your address where SFUEL will be sent').setRequired(true)),
+    async execute(interaction){
+        allow = data.allowed(interaction.member._roles,data.roles());
+        allow2 = data.allowed2(interaction);
+        const playeraddress = interaction.options.getString('address');
+        if (allow.length != 0 || allow2 != 0)
+        {
+            await interaction.deferReply();
+            const headers = {'Authorization': 'bearer ' + String(process.env.SKALEFAUCETKEY),'Content-Type': 'application/json'}
+            await axios.post('https://api.cryptoblades.io/faucet', {'address': String(playeraddress), "type": "skale"}, {headers: headers})
+            .then(async(response) => { 
+                res = JSON.stringify(response.data)
+                console.log(res)
+                if (res == '{"sent":true}'){
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! Skills have been sent to your SKALE address`)
+                }
+                else if (res.includes('{"error":"Please try again in')){
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! You have already requested SFUEL. Please try again later.`)
+                }
+                else if (res.includes(`is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted."}`)){
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! You have entered an incorrect wallet address.`)
+                }
+                else{
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! Please Call Moderator - Skale Faucet bot is dead`)
+                }
+            })
+            .catch(async (error) => {
+                res = JSON.stringify(error.response.data)
+                console.log(res)
+                if (res == '{"sent":true}'){
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! Skills have been sent to your SKALE address`)
+                }
+                else if (res.includes('{"error":"Please try again in')){
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! You have already requested SFUEL. Please try again later.`)
+                }
+                else if (res.includes(`is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted."}`)){
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! You have entered an incorrect wallet address.`)
+                }
+                else{
+                    await interaction.editReply(`Hi <@${interaction.user.id}>! Please Call Moderator - Skale Faucet bot is dead`)
+                }
+            });
+        }
+        else
+        {
+            interaction.reply({
+                content: "Bot Commands only work in <#833235142046384129>",
+			    ephemeral: true
+            })
+        }
+    }
+}
+
