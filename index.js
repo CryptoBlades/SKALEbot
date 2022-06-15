@@ -1,10 +1,10 @@
-require('dotenv').config();
-const fs = require ("fs");
+// require('dotenv').config();
+// const fs = require ("fs");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { Client, Intents, Collection } = require ("discord.js");
 const Discord = require('discord.js')
-const wait = require('node:timers/promises').setTimeout;
+// const wait = require('node:timers/promises').setTimeout;
 const client = new Client({
 	intents: [
 		Intents.FLAGS.GUILDS,

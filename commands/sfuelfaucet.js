@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const data = require('../data.js')
-const Web3 = require('web3');
 const axios = require('axios');
 
 module.exports = {
