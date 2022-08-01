@@ -14,6 +14,8 @@ const client = new Client({
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 
 const commands = [];
+client.cooldowns = new Discord.Collection();
+client.COOLDOWN_SECONDS = 900;
 client.commands = new Collection();
 
 for (const file of commandFiles){
