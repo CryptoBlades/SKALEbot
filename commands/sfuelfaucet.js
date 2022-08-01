@@ -3,6 +3,10 @@ const { MessageEmbed } = require("discord.js");
 const data = require('../data.js')
 const axios = require('axios');
 const fs = require('fs')
+const sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, Math.ceil(time * 1000)));
+ };
+
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,18 +26,23 @@ module.exports = {
                 res = JSON.stringify(response.data)
                 console.log(res)
                 if (res == '{"sent":true}'){
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! SFUEL have been sent to your SKALE address`)
                 }
                 else if (res.includes('{"error":"Please try again in')){
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! You have already requested SFUEL. Please try again later.`)
                 }
                 else if (res.includes(`is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted."}`)){
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! You have entered an incorrect wallet address.`)
                 }
                 else if (res.includes(`The faucet has dried up`)){
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! Please Call Developer - Skale Faucet bot is out of sfuel`)
                 }
                 else{
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! Bot maintenance! Please Wait`)
                 }
             })
@@ -41,18 +50,23 @@ module.exports = {
                 res = JSON.stringify(error.response.data)
                 console.log(res)
                 if (res == '{"sent":true}'){
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! SFUEL have been sent to your SKALE address`)
                 }
                 else if (res.includes('{"error":"Please try again in')){
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! You have already requested SFUEL. Please try again later.`)
                 }
                 else if (res.includes(`is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted."}`)){
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! You have entered an incorrect wallet address.`)
                 }
                 else if (res.includes(`The faucet has dried up`)){
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! Please Call Developer - Skale Faucet bot is out of sfuel`)
                 }
                 else{
+                    await sleep(15)
                     await interaction.editReply(`Hi <@${interaction.user.id}>! Bot maintenance! Please Wait`)
                 }
             });
